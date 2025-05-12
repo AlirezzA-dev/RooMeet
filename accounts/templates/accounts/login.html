@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ورود</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Dana;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .login-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            padding: 30px;
+        }
+        
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .login-header h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .login-header p {
+            color: #777;
+            font-size: 14px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-size: 14px;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border 0.3s;
+        }
+        
+        .form-group input:focus {
+            border-color: #4285f4;
+            outline: none;
+        }
+        
+        .password-toggle {
+            position: absolute;
+            left: 15px;
+            top: 40px;
+            cursor: pointer;
+            color: #777;
+        }
+        
+        .captcha-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .captcha-image {
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 3px;
+            /* user-select: none; */
+            min-width: 80px;
+            text-align: center;
+        }
+        
+        .captcha-refresh {
+            background: none;
+            border: none;
+            color: #4285f4;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #4285f4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-bottom: 15px;
+        }
+        
+        .login-btn:hover {
+            background-color: #3367d6;
+        }
+        
+        .google-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: white;
+            color: #555;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .google-btn:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .google-icon {
+            width: 18px;
+            height: 18px;
+        }
+        
+        .links-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        .link {
+            color: #4285f4;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+        
+        .link:hover {
+            color: #3367d6;
+            text-decoration: underline;
+        }
+        
+        .home-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <h1>ورود به حساب کاربری</h1>
+            <p>لطفا اطلاعات خود را وارد کنید</p>
+        </div>
+
+        <form id="loginForm" method="post">
+            {% csrf_token %}
+            {% if error %}
+                <div style="color: red; margin-bottom: 15px; font-size: 14px;">
+                    {{ error }}
+                </div>
+            {% endif %}
+            <div class="form-group">
+                <label for="username">نام کاربری</label>
+                <input type="text" id="username" name="username" placeholder="نام کاربری خود را وارد کنید" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">رمز عبور</label>
+                <input type="password" id="password" name="password" placeholder="رمز عبور خود را وارد کنید" required>
+                <i class="fas fa-eye password-toggle" id="togglePassword"></i>
+            </div>
+            
+            <div class="form-group">
+                <label for="captcha">کد امنیتی</label>
+                <div class="captcha-container">
+                    <input type="text" id="captcha" placeholder="کد نمایش داده شده را وارد کنید" required>
+                    <div class="captcha-image" id="captchaText">A7B9K</div>
+
+                    <button type="button" class="captcha-refresh" id="refreshCaptcha">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <button type="submit" class="login-btn">ورود</button>
+            
+            <button type="button" class="google-btn">
+                <i class="fab fa-google google-icon"></i>
+                ورود با گوگل
+            </button>
+            
+            <div class="links-container">
+                <a href="register.html" class="link">ثبت نام</a>
+                <a href="forgotpass.html" class="link">فراموشی رمز عبور</a>
+            </div>
+            
+            <!-- <div class="home-link">
+                <a href="index.html" class="link">بازگشت به صفحه اصلی</a>
+            </div> -->
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('refreshCaptcha').addEventListener('click', function() {
+            const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            let captcha = '';
+            for (let i = 0; i < 5; i++) {
+                captcha += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            document.getElementById('captchaText').textContent = captcha;
+        });
+
+        document.getElementById('togglePassword').addEventListener('click', function() {
+            const passwordInput = document.getElementById('password');
+            const icon = this;
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        });
+    </script>
+</body>
+</html>

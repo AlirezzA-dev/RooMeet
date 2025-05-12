@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بازیابی رمز عبور</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Dana;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .forgot-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            padding: 30px;
+        }
+        
+        .forgot-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .forgot-header h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .forgot-header p {
+            color: #777;
+            font-size: 14px;
+        }
+        
+        .steps {
+            margin-bottom: 25px;
+            padding-right: 15px;
+        }
+        
+        .step {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        
+        .step-number {
+            background-color: #4285f4;
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+            margin-left: 10px;
+            flex-shrink: 0;
+        }
+        
+        .step-text {
+            color: #555;
+            font-size: 14px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-size: 14px;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border 0.3s;
+        }
+        
+        .form-group input:focus {
+            border-color: #4285f4;
+            outline: none;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #4285f4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-bottom: 15px;
+        }
+        
+        .submit-btn:hover {
+            background-color: #3367d6;
+        }
+        
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .link {
+            color: #4285f4;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+        
+        .link:hover {
+            color: #3367d6;
+            text-decoration: underline;
+        }
+        
+        .home-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="forgot-container">
+        <div class="forgot-header">
+            <h1>بازیابی رمز عبور</h1>
+            <p>لطفا ایمیل یا شماره موبایل خود را وارد کنید</p>
+        </div>
+        
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-text">اطلاعات حساب خود را وارد کنید</div>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-text">کد تایید را دریافت خواهید کرد</div>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-text">رمز عبور جدید خود را تنظیم کنید</div>
+            </div>
+        </div>
+        
+        <form id="forgotForm">
+            <div class="form-group">
+                <label for="emailOrPhone">ایمیل یا شماره موبایل</label>
+                <input type="text" id="emailOrPhone" placeholder="ایمیل یا شماره موبایل خود را وارد کنید" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="captcha">کد امنیتی</label>
+                <div class="captcha-container" style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
+                    <input type="text" id="captcha" placeholder="کد نمایش داده شده را وارد کنید" required>
+                    <div class="captcha-image" style="background-color: #f0f0f0; padding: 10px; border-radius: 5px; font-family: 'Courier New', monospace; letter-spacing: 3px; user-select: none; min-width: 80px; text-align: center;" id="captchaText">A7B9K</div>
+
+                    <button type="button" class="captcha-refresh" style="background: none; border: none; color: #4285f4; cursor: pointer; font-size: 16px;" id="refreshCaptcha">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <button type="submit" class="submit-btn">ارسال کد تایید</button>
+            
+            <div class="login-link">
+                <span>رمز عبور خود را به یاد آوردید؟</span>
+                <a href="login.html" class="link">ورود به حساب کاربری</a>
+            </div>
+            
+            <div class="home-link">
+                <a href="login.html" class="link">بازگشت به صفحه اصلی</a>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('refreshCaptcha').addEventListener('click', function() {
+            const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            let captcha = '';
+            for (let i = 0; i < 5; i++) {
+                captcha += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            document.getElementById('captchaText').textContent = captcha;
+        });
+
+        document.getElementById('forgotForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const captchaInput = document.getElementById('captcha').value;
+            const captchaText = document.getElementById('captchaText').textContent;
+            
+            if (captchaInput !== captchaText) {
+                alert('کد امنیتی وارد شده صحیح نیست!');
+                return;
+            }
+            
+            alert('کد تایید به ایمیل/موبایل شما ارسال شد!');
+
+            // window.location.href = 'reset-password.html';
+        });
+    </script>
+</body>
+</html>
