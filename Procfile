@@ -1,1 +1,1 @@
-web: uvicorn chatproject.asgi:application --host=0.0.0.0 --port=10000
+web: daphne chatproject.asgi:application
