@@ -30,6 +30,10 @@ ALLOWED_HOSTS = ['roomeet.onrender.com']
 
 # Application definition
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://roomeet.onrender.com"
+]
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
